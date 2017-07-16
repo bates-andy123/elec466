@@ -8,13 +8,11 @@ void dh_hw_mult::process_hw_mult()
   NN_DIGIT a[2], b, c, t, u;
   NN_HALF_DIGIT bHigh, bLow, cHigh, cLow;
 
-  while(1){
-
-	//Right now we are in the waiting stage
+  for (;;) {  
+  
     if (hw_mult_enable.read() == true) 
     {	
 
-	//We have just reached the execute stage
 	// Read inputs	
 	b = in_data_1.read();
 	c = in_data_2.read();
@@ -36,17 +34,18 @@ void dh_hw_mult::process_hw_mult()
   	if ((a[0] += u) < u) a[1]++;
   	a[1] += HIGH_HALF (t);
 		
+ 	// Hardware multiplication delay = 100 ns
+	wait (100, SC_NS);
+	
 	// Write outputs
 	out_data_low.write(a[0]);
 	out_data_high.write(a[1]);
+		
+    }
 
-	hw_mult_done.write(true);
-	wait();
-	while(hw_mult_enable.read() == true){
-		wait();
-	}
+    wait();		// wait for a change of hw_mult_enable	
 
-      }
-   }
+  }
+	  	  
 }
 
