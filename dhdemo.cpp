@@ -8,6 +8,7 @@ int sc_main(int argc , char *argv[])
 
 	sc_signal <bool> enable, done;
 	sc_signal <NN_DIGIT> operand1, operand2, result1, result2;
+	sc_clock Clk("Clk", 10, SC_NS);
 	
 	enable.write(false);
 	done.write(false);
@@ -28,8 +29,9 @@ int sc_main(int argc , char *argv[])
 	DH_HW_MULT.out_data_high (result2);	// result2 to software
 	DH_HW_MULT.hw_mult_enable (enable);	// enable hardware
 	DH_HW_MULT.hw_mult_done (done);		// hardware done
+	DH_HW_MULT.Clk(Clk);
 
-	sc_start();
+	sc_start(100, SC_NS);
 
 	return(0);
 }
