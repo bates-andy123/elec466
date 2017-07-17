@@ -2,6 +2,7 @@
 #include "digit.h"
 #include "dh_sw.h"
 #include "dh_hw_mult.h"
+#include "adder.h"
 
 int sc_main(int argc , char *argv[])
 {

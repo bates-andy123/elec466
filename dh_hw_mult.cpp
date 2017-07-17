@@ -1,6 +1,8 @@
 #include "systemc.h"
 #include "digit.h"
 #include "dh_hw_mult.h"
+#include "shift_register.h"
+#include "bitwise.h"
 
 typedef enum{
 	state_wait = 0,
@@ -15,6 +17,10 @@ void dh_hw_mult::process_hw_mult()
   NN_DIGIT a[2], b, c, t, u;
   NN_HALF_DIGIT bHigh, bLow, cHigh, cLow;
   hw_mult_states hw_mult_curr_state = state_wait;
+
+  BITWISE bitwise1(); 
+  BITWISE bitwise2();
+  SHIFT_REGISTER1();
 
   for (;;) {  
 
@@ -34,6 +40,9 @@ void dh_hw_mult::process_hw_mult()
 		
 	// Original code from NN_DigitMult()...		
   	bHigh = (NN_HALF_DIGIT)HIGH_HALF (b);
+        std::cout << b << std::endl;
+        std::cout << bHigh << std::endl;
+        
   	bLow = (NN_HALF_DIGIT)LOW_HALF (b);
   	cHigh = (NN_HALF_DIGIT)HIGH_HALF (c);
   	cLow = (NN_HALF_DIGIT)LOW_HALF (c);
